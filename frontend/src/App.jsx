@@ -1,14 +1,20 @@
-const App = () => {
-	return (
-		<div className="min-h-screen flex flex-col bg-black text-white/95 items-center justify-center text-2xl font-bold text-center">
-			<img
-				className="size-40"
-				src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"
-				alt=""
-			/>
-			<p>Hello Vite + React + TailwindCSS!</p>
-		</div>
-	);
-};
+import React from "react";
+import Header from "./components/Header";
+import ProductModal from "./components/AddProductDrawer";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Homepage from "./pages/Homepage";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div  className="w-full">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
 
 export default App;
