@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { useProductStore } from "../store/productStore";
+import { toast } from "react-toastify";
 
-export default function ProductModal() {
-  const [open, setOpen] = useState(false);
+export default function ProductModal({open,setOpen}) {
+  // const [open, setOpen] = useState(false);
 
   const [product, setProduct] = useState({
     name: "",
@@ -16,17 +17,31 @@ export default function ProductModal() {
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSave = async function () {
+    const { success, message } =await createProduct(product);
+    setProduct({
+      name: "",
+      price: "",
+      image: "",
+    })
+    if(success){
+      setOpen(false);
+      toast.success(message)
+    }else{
+      toast.info(message)
+    }
+
+  };
+
+  const { createProduct } = useProductStore();
+
   return (
-    <>
-      {/* Open Button */}
-      <button className="btn" onClick={() => setOpen(true)}>
-        <IoAddCircleOutline /> Add Product
-      </button>
+  
+    
 
-      {/* Modal */}
-      <dialog className={`modal ${open ? "modal-open" : ""}`}>
-        <div className="modal-box w-[380px] p-6 rounded-lg">
+    <dialog className={`modal backdrop-blur-xs ${open ? "modal-open" : ""}  z-[9999]`}>
 
+        <div className="modal-box w-[380px] p-6 rounded-lg z-[10000]">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-xl">Add Product</h3>
@@ -85,13 +100,7 @@ export default function ProductModal() {
 
           {/* Footer */}
           <div className="modal-action mt-2 flex justify-end gap-2">
-            <button
-              className="btn min-w-[90px]"
-              onClick={() => {
-                console.log(product);
-                setOpen(false);
-              }}
-            >
+            <button className="btn min-w-[90px]" onClick={handleSave}>
               Save
             </button>
 
@@ -102,9 +111,8 @@ export default function ProductModal() {
               Cancel
             </button>
           </div>
-
         </div>
       </dialog>
-    </>
+  
   );
 }
