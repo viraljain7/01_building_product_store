@@ -62,7 +62,7 @@ function EditProductDrawer({open, setOpen,selected,changeHandler,handleSave}) {
 
       {/* Footer */}
       <div className="modal-action mt-2 flex justify-end gap-2">
-        <button className="btn min-w-[90px]" onClick={() => handleSave(selected.id, selected)}>
+        <button className="btn min-w-[90px]" onClick={() => handleSave( selected)}>
           Save
         </button>
 
